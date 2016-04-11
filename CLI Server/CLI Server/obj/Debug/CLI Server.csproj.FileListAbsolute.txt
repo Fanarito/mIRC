@@ -1,0 +1,6 @@
+x:\viktor\documents\visual studio 2015\Projects\CLI Server\CLI Server\bin\Debug\CLI Server.exe.config
+x:\viktor\documents\visual studio 2015\Projects\CLI Server\CLI Server\bin\Debug\CLI Server.exe
+x:\viktor\documents\visual studio 2015\Projects\CLI Server\CLI Server\bin\Debug\CLI Server.pdb
+x:\viktor\documents\visual studio 2015\Projects\CLI Server\CLI Server\obj\Debug\CLI Server.csprojResolveAssemblyReference.cache
+x:\viktor\documents\visual studio 2015\Projects\CLI Server\CLI Server\obj\Debug\CLI Server.exe
+x:\viktor\documents\visual studio 2015\Projects\CLI Server\CLI Server\obj\Debug\CLI Server.pdb
