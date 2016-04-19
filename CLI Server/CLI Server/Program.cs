@@ -11,37 +11,14 @@ namespace CLI_Server
     class Program
     {
         static string ip = "127.0.0.1";
-        static int port = 50000;
+        static int port = 3679;
         static Channel root;
 
         static void Main(string[] args)
         {
-            /*Channel root = new Channel("root");
-            Console.WriteLine(root.id);
-            Console.WriteLine(root.name);
-            Console.ReadLine();
-
-            root.addChannel("thing");
-            root.channels[0].addChannel("wutwut");
-            root.channels[0].channels[0].addChannel("wutwut");
-            root.channels[0].channels[0].addChannel("dickwad");
-            root.channels[0].channels[0].addChannel("wutwwut");
-            root.channels[0].channels[0].addChannel("dicakwad");
-            root.channels[0].channels[0].channels[0].addChannel("wut");
-            root.channels[0].channels[0].channels[0].addChannel("wuta");
-            root.channels[0].channels[0].channels[0].addChannel("wutaa");
-            root.channels[0].channels[0].channels[3].addChannel("nei");
-            root.addChannel("neinei");
-            root.channels[0].addChannel("jaja");
-            root.channels[0].addChannel("kkk");
-            root.addChannel("wut");
-            root.addChannel("thong");
-            root.getChannelList();
-            //Console.WriteLine(root.channels[0].id);
-            Console.ReadLine();*/
-
             // Creating root channel
             root = new Channel("root");
+            // Start a UserGetter
             Task.Factory.StartNew(UserGetter);
             Console.ReadLine();
         }
@@ -55,7 +32,7 @@ namespace CLI_Server
 
             while (true)
             {
-                var user = new User(listener.AcceptSocket(), root);
+                var user = new User(listener.AcceptSocket(), root, root);
                 Task.Factory.StartNew(user.Run);
                 Console.WriteLine("Connection accepted");
             }

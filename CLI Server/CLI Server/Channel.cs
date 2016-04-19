@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+
 namespace CLI_Server
 {
     class Channel
@@ -18,10 +22,12 @@ namespace CLI_Server
         public string id;
         private Channel parent;
         private ConsoleColor color;
+        private string motd;
 
         public Channel(string _name, Channel _parent = null, ConsoleColor _color = ConsoleColor.Black)
         {
-            name = "#" + _name;
+            //name = "#" + _name;
+            name = _name;
             parent = _parent;
             user_count = 0;
 
@@ -37,9 +43,11 @@ namespace CLI_Server
                 id = parent.id + name;
             else
             {
-                id = "#root";
+                id = "@root";
+                name = "@root";
                 color = ConsoleColor.DarkRed;
             }
+            Console.WriteLine("Created " + id);
         }
 
         private static ConsoleColor GetRandomConsoleColor()
@@ -52,32 +60,44 @@ namespace CLI_Server
             channels.Add(new Channel(_name, this));
         }
 
-        public void getChannelList()
+        public void GetChannelList(BinaryWriter writer)
         {
+            string channel_string = "";
             foreach (var channel in channels)
             {
                 Console.ForegroundColor = channel.color;
                 Console.WriteLine(channel.id);
-                channel.getChannelList();
+                writer.Write(channel.id);
+                channel.GetChannelList(writer);
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
 
         public void UserLeave(User userino)
         {
-            foreach (var user in users)
-            {
-                if (user == userino)
-                {
-                    users.Remove(user);
-                    break;
-                }
-            }
+            users.Remove(userino);
         }
 
         public void AddUser(User userino)
         {
             users.Add(userino);
+        }
+
+        public void JoinChildChannel(string channel_name, User userino)
+        {
+            foreach (var channel in channels)
+            {
+                Console.WriteLine(channel.id);
+                if (channel.name == channel_name)
+                {
+                    UserLeave(userino);
+                    channel.AddUser(userino);
+                    //userino.SetChannel(channel);
+                    userino.channel = channel;
+                    Console.WriteLine(userino.channel.id);
+                    break;
+                }
+            }
         }
 
         public void Broadcast(string message)

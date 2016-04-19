@@ -19,13 +19,15 @@ namespace CLI_Server
         private BinaryReader reader;
 
         private string name;
-        private Channel channel;
+        public Channel channel;
+        public Channel root;
 
-        public User(Socket socket, Channel _channel)
+        public User(Socket socket, Channel _channel, Channel _root)
         {
             connection = socket;
             channel = _channel;
             channel.AddUser(this);
+            root = _root;
 
             // Create NetworkStream object for Socket
             socketStream = new NetworkStream(connection);
@@ -40,20 +42,42 @@ namespace CLI_Server
             name = new_name;
         }
 
-        public void SetChannel(string channel_name)
+        public void SetChannel(Channel _channel)
         {
-            Channel change = null;
+            channel.UserLeave(this);
+            channel = _channel;
+            channel.AddUser(this);
+            /*Channel change = null;
             foreach (var chan in channel.channels)
             {
                 if (chan.name == channel_name)
                 {
                     change = chan;
+                    channel = chan;
                 }
-            }
-            if (change != null)
+            }*/
+        }
+
+        public void SetChannel(string channel_name)
+        {
+            if (channel_name[0] == '@')
             {
-                channel.UserLeave(this);
-                channel = change;
+                
+            }
+            else
+            {
+                foreach (var _channel in channel.channels)
+                {
+                    //Console.WriteLine(_channel.name);
+                    if (_channel.name == channel_name)
+                    {
+                        //SetChannel(_channel);
+                        channel.UserLeave(this);
+                        channel = _channel;
+                        channel.AddUser(this);
+                        return;
+                    }
+                }
             }
         }
 
@@ -64,16 +88,53 @@ namespace CLI_Server
 
         private void ProcessMessage(string message)
         {
-            if (message.Trim() == "\r\n")
+            try
             {
-                SendMessage("fuckoff");
+                if (message[0] == '$')
+                {
+                    ProcessCommand(message.Substring(1));
+                }
+                else
+                {
+                    channel.Broadcast(name + " " + channel.id + " > " + message);
+                    Console.WriteLine(name + " " + channel.id + " > " + message);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                channel.Broadcast(message);
-                Console.WriteLine(message);
+                Console.WriteLine("Empty message you motherfucking whore... Eat a dick.");
+                writer.Write("Empty message you motherfucking whore... Eat a dick.");
             }
-            
+        }
+
+        private void ProcessCommand(string _command)
+        {
+            //channel.Broadcast(command);
+            string[] command = _command.Split(' ');
+            switch (command[0])
+            {
+                case "get_channel_id":
+                    writer.Write("Channel ID: " + channel.id);
+                    break;
+                case "get_channels":
+                    // Writes out all child channels to client
+                    channel.GetChannelList(writer);
+                    break;
+                case "create":
+                    channel.addChannel(command[1]);
+                    SetChannel(command[1]);
+                    //channel.JoinChildChannel(command[1], this);
+                    writer.Write("created and joined " + command[1]);
+                    Console.WriteLine(channel.id);
+                    break;
+                case "join":
+                    SetChannel(command[1]);
+                    writer.Write("joined " + command[1]);
+                    break;
+                default:
+                    writer.Write("Command not recognized");
+                    break;
+            }
         }
 
         public void Run()
@@ -81,11 +142,22 @@ namespace CLI_Server
             using (connection)
             {
                 name = reader.ReadString();
+                ProcessMessage(reader.ReadString());
+
                 Console.WriteLine(name + " connected");
                 writer.Write("$server_message connection confirmed");
                 while (true)
                 {
-                    ProcessMessage(reader.ReadString());
+                    try
+                    {
+                        ProcessMessage(reader.ReadString());
+                    }
+                    catch (IOException ex)
+                    {
+                        Console.WriteLine(name + " disconnected");
+                        break;
+                        //Disconnect();
+                    }
                 }
             }
         }
