@@ -10,3 +10,9 @@ H:\mIRC-master\CLI Server\CLI Server\bin\Debug\CLI Server.pdb
 H:\mIRC-master\CLI Server\CLI Server\obj\Debug\CLI Server.csprojResolveAssemblyReference.cache
 H:\mIRC-master\CLI Server\CLI Server\obj\Debug\CLI Server.exe
 H:\mIRC-master\CLI Server\CLI Server\obj\Debug\CLI Server.pdb
+\\skra\nem-redirect$\1504972999\Documents\mIRC\CLI Server\CLI Server\bin\Debug\CLI Server.exe.config
+\\skra\nem-redirect$\1504972999\Documents\mIRC\CLI Server\CLI Server\obj\Debug\CLI Server.exe
+\\skra\nem-redirect$\1504972999\Documents\mIRC\CLI Server\CLI Server\obj\Debug\CLI Server.pdb
+\\skra\nem-redirect$\1504972999\Documents\mIRC\CLI Server\CLI Server\bin\Debug\CLI Server.exe
+\\skra\nem-redirect$\1504972999\Documents\mIRC\CLI Server\CLI Server\bin\Debug\CLI Server.pdb
+\\skra\nem-redirect$\1504972999\Documents\mIRC\CLI Server\CLI Server\obj\Debug\CLI Server.csprojResolveAssemblyReference.cache

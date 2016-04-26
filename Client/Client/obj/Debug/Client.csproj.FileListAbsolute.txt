@@ -16,3 +16,12 @@ H:\mIRC-master\Client\Client\obj\Debug\Client.Properties.Resources.resources
 H:\mIRC-master\Client\Client\obj\Debug\Client.csproj.GenerateResource.Cache
 H:\mIRC-master\Client\Client\obj\Debug\Client.exe
 H:\mIRC-master\Client\Client\obj\Debug\Client.pdb
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\bin\Debug\Client.exe.config
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\obj\Debug\Client.exe
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\obj\Debug\Client.pdb
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\bin\Debug\Client.exe
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\bin\Debug\Client.pdb
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\obj\Debug\Client.Form1.resources
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\obj\Debug\Client.Properties.Resources.resources
+\\skra\nem-redirect$\1504972999\Documents\mIRC\Client\Client\obj\Debug\Client.csproj.GenerateResource.Cache

@@ -40,6 +40,9 @@
             this.t_messages = new System.Windows.Forms.TabPage();
             this.rtb_send_message = new System.Windows.Forms.RichTextBox();
             this.rtb_message_log = new System.Windows.Forms.RichTextBox();
+            this.TREE_channels = new System.Windows.Forms.TreeView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.LBL_channel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.t_settings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_port)).BeginInit();
@@ -53,7 +56,7 @@
             this.tabControl1.Location = new System.Drawing.Point(-1, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(455, 541);
+            this.tabControl1.Size = new System.Drawing.Size(597, 541);
             this.tabControl1.TabIndex = 2;
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
             // 
@@ -69,7 +72,7 @@
             this.t_settings.Location = new System.Drawing.Point(4, 22);
             this.t_settings.Name = "t_settings";
             this.t_settings.Padding = new System.Windows.Forms.Padding(3);
-            this.t_settings.Size = new System.Drawing.Size(447, 515);
+            this.t_settings.Size = new System.Drawing.Size(589, 515);
             this.t_settings.TabIndex = 0;
             this.t_settings.Text = "Settings";
             this.t_settings.UseVisualStyleBackColor = true;
@@ -154,12 +157,15 @@
             // 
             // t_messages
             // 
+            this.t_messages.Controls.Add(this.LBL_channel);
+            this.t_messages.Controls.Add(this.label3);
+            this.t_messages.Controls.Add(this.TREE_channels);
             this.t_messages.Controls.Add(this.rtb_send_message);
             this.t_messages.Controls.Add(this.rtb_message_log);
             this.t_messages.Location = new System.Drawing.Point(4, 22);
             this.t_messages.Name = "t_messages";
             this.t_messages.Padding = new System.Windows.Forms.Padding(3);
-            this.t_messages.Size = new System.Drawing.Size(447, 515);
+            this.t_messages.Size = new System.Drawing.Size(589, 515);
             this.t_messages.TabIndex = 1;
             this.t_messages.Text = "Messages";
             this.t_messages.UseVisualStyleBackColor = true;
@@ -182,11 +188,38 @@
             this.rtb_message_log.TabIndex = 2;
             this.rtb_message_log.Text = "";
             // 
+            // TREE_channels
+            // 
+            this.TREE_channels.Location = new System.Drawing.Point(448, 6);
+            this.TREE_channels.Name = "TREE_channels";
+            this.TREE_channels.Size = new System.Drawing.Size(135, 460);
+            this.TREE_channels.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(448, 469);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 14);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "You are in:";
+            // 
+            // LBL_channel
+            // 
+            this.LBL_channel.AutoSize = true;
+            this.LBL_channel.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_channel.Location = new System.Drawing.Point(448, 491);
+            this.LBL_channel.Name = "LBL_channel";
+            this.LBL_channel.Size = new System.Drawing.Size(128, 16);
+            this.LBL_channel.TabIndex = 6;
+            this.LBL_channel.Text = "@root#DANKMEMES";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(455, 541);
+            this.ClientSize = new System.Drawing.Size(598, 541);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -197,6 +230,7 @@
             this.t_settings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_port)).EndInit();
             this.t_messages.ResumeLayout(false);
+            this.t_messages.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -215,6 +249,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_connect;
+        private System.Windows.Forms.TreeView TREE_channels;
+        private System.Windows.Forms.Label LBL_channel;
+        private System.Windows.Forms.Label label3;
     }
 }
 

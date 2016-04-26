@@ -21,11 +21,24 @@ namespace Client
         public Form1()
         {
             InitializeComponent();
+            InitializeTreeView();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        //shit fyrir Treeview
+        private void InitializeTreeView()
+        {
+            TREE_channels.BeginUpdate();
+            TREE_channels.Nodes.Add("@root");
+            TREE_channels.Nodes[0].Nodes.Add("Child 1");
+            TREE_channels.Nodes[0].Nodes.Add("Child 2");
+            TREE_channels.Nodes[0].Nodes[1].Nodes.Add("Grandchild");
+            TREE_channels.Nodes[0].Nodes[1].Nodes[0].Nodes.Add("Great Grandchild");
+            TREE_channels.EndUpdate();
         }
 
         public void Log(string message)

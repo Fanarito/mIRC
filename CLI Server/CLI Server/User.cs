@@ -102,8 +102,8 @@ namespace CLI_Server
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Empty message you motherfucking whore... Eat a dick.");
-                writer.Write("Empty message you motherfucking whore... Eat a dick.");
+                Console.WriteLine("Empty message.");
+                writer.Write("Empty message.");
             }
         }
 
