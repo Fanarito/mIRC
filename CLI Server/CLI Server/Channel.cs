@@ -20,7 +20,7 @@ namespace CLI_Server
         private int user_count;
         public List<Channel> channels = new List<Channel>();
         public string id;
-        private Channel parent;
+        public Channel parent;
         private ConsoleColor color;
         private string motd;
 

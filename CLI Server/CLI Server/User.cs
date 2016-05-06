@@ -13,28 +13,37 @@ namespace CLI_Server
     class User
     {
         // Connection stuffs
-        internal Socket connection;
-        private NetworkStream socketStream;
-        internal BinaryWriter writer;
-        private BinaryReader reader;
+        internal Socket user_connection;
+        internal Socket server_connection;
+        private NetworkStream user_stream;
+        private NetworkStream server_stream;
+
+        internal BinaryWriter user_writer;
+        internal BinaryWriter server_writer;
+        private BinaryReader user_reader;
+        private BinaryReader server_reader;
 
         private string name;
         public Channel channel;
         public Channel root;
 
-        public User(Socket socket, Channel _channel, Channel _root)
+        public User(Socket server_socket, Socket user_socket, Channel _channel, Channel _root)
         {
-            connection = socket;
+            user_connection = user_socket;
+            server_connection = server_socket;
             channel = _channel;
             channel.AddUser(this);
             root = _root;
 
             // Create NetworkStream object for Socket
-            socketStream = new NetworkStream(connection);
+            user_stream = new NetworkStream(user_connection);
+            server_stream = new NetworkStream(server_connection);
 
             // Create Streams for reading/writing bytes
-            writer = new BinaryWriter(socketStream);
-            reader = new BinaryReader(socketStream);
+            user_writer = new BinaryWriter(user_stream);
+            server_writer = new BinaryWriter(server_stream);
+            user_reader = new BinaryReader(user_stream);
+            server_reader = new BinaryReader(server_stream);
         }
 
         public void SetName(string new_name)
@@ -62,7 +71,13 @@ namespace CLI_Server
         {
             if (channel_name[0] == '@')
             {
-                
+                Channel buff = channel;
+
+                while (buff.parent != null)
+                {
+                    buff = buff.parent;
+                }
+                SetChannel(buff);
             }
             else
             {
@@ -83,10 +98,10 @@ namespace CLI_Server
 
         public void SendMessage(string message)
         {
-            writer.Write(message);
+           user_writer.Write(message);
         }
 
-        private void ProcessMessage(string message)
+        private void ProcessUserMessage(string message)
         {
             try
             {
@@ -103,7 +118,28 @@ namespace CLI_Server
             catch (Exception ex)
             {
                 Console.WriteLine("Empty message.");
-                writer.Write("Empty message.");
+                server_writer.Write("Empty message.");
+            }
+        }
+
+        private void ProcessServerMessage(string message)
+        {
+            try
+            {
+                if (message[0] == '$')
+                {
+                    ProcessCommand(message.Substring(1));
+                }
+                else
+                {
+                    channel.Broadcast(name + " " + channel.id + " > " + message);
+                    Console.WriteLine(name + " " + channel.id + " > " + message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Empty message.");
+                server_writer.Write("Empty message.");
             }
         }
 
@@ -114,43 +150,69 @@ namespace CLI_Server
             switch (command[0])
             {
                 case "get_channel_id":
-                    writer.Write("Channel ID: " + channel.id);
+                    server_writer.Write(channel.id);
                     break;
                 case "get_channels":
                     // Writes out all child channels to client
-                    channel.GetChannelList(writer);
+                    channel.GetChannelList(server_writer);
                     break;
                 case "create":
                     channel.addChannel(command[1]);
                     SetChannel(command[1]);
                     //channel.JoinChildChannel(command[1], this);
-                    writer.Write("created and joined " + command[1]);
+                    server_writer.Write(channel.id);
+                    server_writer.Write("created and joined " + command[1]);
                     Console.WriteLine(channel.id);
                     break;
                 case "join":
                     SetChannel(command[1]);
-                    writer.Write("joined " + command[1]);
+                    server_writer.Write(channel.id);
+                    server_writer.Write("joined " + command[1]);
                     break;
                 default:
-                    writer.Write("Command not recognized");
+                    server_writer.Write("Command not recognized");
                     break;
             }
         }
 
-        public void Run()
+        public void User_Run()
         {
-            using (connection)
+            using (user_connection)
             {
-                name = reader.ReadString();
-                ProcessMessage(reader.ReadString());
+                name = user_reader.ReadString();
+                ProcessUserMessage(user_reader.ReadString());
 
-                Console.WriteLine(name + " connected");
-                writer.Write("$server_message connection confirmed");
                 while (true)
                 {
                     try
                     {
-                        ProcessMessage(reader.ReadString());
+                        ProcessUserMessage(user_reader.ReadString());
+                    }
+                    catch (IOException ex)
+                    {
+                        Console.WriteLine(name + " disconnected");
+                        break;
+                        //Disconnect();
+                    }
+                }
+            }
+        }
+
+        public void Server_Run() 
+        {
+            using (server_connection)
+            {
+                name = server_reader.ReadString();
+                ProcessServerMessage(server_reader.ReadString());
+
+                Console.WriteLine(name + " connected");
+                server_writer.Write("$server_message connection confirmed");
+
+                while (true)
+                {
+                    try
+                    {
+                        ProcessServerMessage(server_reader.ReadString());
                     }
                     catch (IOException ex)
                     {
@@ -164,10 +226,10 @@ namespace CLI_Server
 
         private void Disconnect()
         {
-            connection.Close();
-            socketStream.Close();
-            writer.Close();
-            reader.Close();
+            user_connection.Close();
+            user_stream.Close();
+            user_writer.Close();
+            user_reader.Close();
         }
     }
 }

@@ -33,20 +33,22 @@
             this.btn_connect = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.nud_port = new System.Windows.Forms.NumericUpDown();
+            this.nud_user_port = new System.Windows.Forms.NumericUpDown();
             this.txt_ipaddress = new System.Windows.Forms.TextBox();
             this.txt_username = new System.Windows.Forms.TextBox();
             this.lb_username = new System.Windows.Forms.Label();
             this.t_messages = new System.Windows.Forms.TabPage();
+            this.LBL_channel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TREE_channels = new System.Windows.Forms.TreeView();
             this.rtb_send_message = new System.Windows.Forms.RichTextBox();
             this.rtb_message_log = new System.Windows.Forms.RichTextBox();
-            this.TREE_channels = new System.Windows.Forms.TreeView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.LBL_channel = new System.Windows.Forms.Label();
+            this.nud_server_port = new System.Windows.Forms.NumericUpDown();
             this.tabControl1.SuspendLayout();
             this.t_settings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_port)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_user_port)).BeginInit();
             this.t_messages.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_server_port)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -62,10 +64,11 @@
             // 
             // t_settings
             // 
+            this.t_settings.Controls.Add(this.nud_server_port);
             this.t_settings.Controls.Add(this.btn_connect);
             this.t_settings.Controls.Add(this.label2);
             this.t_settings.Controls.Add(this.label1);
-            this.t_settings.Controls.Add(this.nud_port);
+            this.t_settings.Controls.Add(this.nud_user_port);
             this.t_settings.Controls.Add(this.txt_ipaddress);
             this.t_settings.Controls.Add(this.txt_username);
             this.t_settings.Controls.Add(this.lb_username);
@@ -107,23 +110,23 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "IP Address";
             // 
-            // nud_port
+            // nud_user_port
             // 
-            this.nud_port.Location = new System.Drawing.Point(320, 31);
-            this.nud_port.Maximum = new decimal(new int[] {
+            this.nud_user_port.Location = new System.Drawing.Point(320, 31);
+            this.nud_user_port.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
-            this.nud_port.Minimum = new decimal(new int[] {
+            this.nud_user_port.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nud_port.Name = "nud_port";
-            this.nud_port.Size = new System.Drawing.Size(120, 20);
-            this.nud_port.TabIndex = 2;
-            this.nud_port.Value = new decimal(new int[] {
+            this.nud_user_port.Name = "nud_user_port";
+            this.nud_user_port.Size = new System.Drawing.Size(120, 20);
+            this.nud_user_port.TabIndex = 2;
+            this.nud_user_port.Value = new decimal(new int[] {
             3679,
             0,
             0,
@@ -170,30 +173,15 @@
             this.t_messages.Text = "Messages";
             this.t_messages.UseVisualStyleBackColor = true;
             // 
-            // rtb_send_message
+            // LBL_channel
             // 
-            this.rtb_send_message.Location = new System.Drawing.Point(6, 403);
-            this.rtb_send_message.Name = "rtb_send_message";
-            this.rtb_send_message.Size = new System.Drawing.Size(436, 104);
-            this.rtb_send_message.TabIndex = 3;
-            this.rtb_send_message.Text = "";
-            this.rtb_send_message.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rtb_send_message_KeyUp_1);
-            // 
-            // rtb_message_log
-            // 
-            this.rtb_message_log.Location = new System.Drawing.Point(6, 6);
-            this.rtb_message_log.Name = "rtb_message_log";
-            this.rtb_message_log.ReadOnly = true;
-            this.rtb_message_log.Size = new System.Drawing.Size(436, 393);
-            this.rtb_message_log.TabIndex = 2;
-            this.rtb_message_log.Text = "";
-            // 
-            // TREE_channels
-            // 
-            this.TREE_channels.Location = new System.Drawing.Point(448, 6);
-            this.TREE_channels.Name = "TREE_channels";
-            this.TREE_channels.Size = new System.Drawing.Size(135, 460);
-            this.TREE_channels.TabIndex = 4;
+            this.LBL_channel.AutoSize = true;
+            this.LBL_channel.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_channel.Location = new System.Drawing.Point(448, 491);
+            this.LBL_channel.Name = "LBL_channel";
+            this.LBL_channel.Size = new System.Drawing.Size(128, 16);
+            this.LBL_channel.TabIndex = 6;
+            this.LBL_channel.Text = "@root#DANKMEMES";
             // 
             // label3
             // 
@@ -205,15 +193,54 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "You are in:";
             // 
-            // LBL_channel
+            // TREE_channels
             // 
-            this.LBL_channel.AutoSize = true;
-            this.LBL_channel.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_channel.Location = new System.Drawing.Point(448, 491);
-            this.LBL_channel.Name = "LBL_channel";
-            this.LBL_channel.Size = new System.Drawing.Size(128, 16);
-            this.LBL_channel.TabIndex = 6;
-            this.LBL_channel.Text = "@root#DANKMEMES";
+            this.TREE_channels.Location = new System.Drawing.Point(448, 6);
+            this.TREE_channels.Name = "TREE_channels";
+            this.TREE_channels.Size = new System.Drawing.Size(135, 460);
+            this.TREE_channels.TabIndex = 4;
+            // 
+            // rtb_send_message
+            // 
+            this.rtb_send_message.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtb_send_message.Location = new System.Drawing.Point(6, 403);
+            this.rtb_send_message.Name = "rtb_send_message";
+            this.rtb_send_message.Size = new System.Drawing.Size(436, 104);
+            this.rtb_send_message.TabIndex = 3;
+            this.rtb_send_message.Text = "";
+            this.rtb_send_message.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rtb_send_message_KeyUp_1);
+            // 
+            // rtb_message_log
+            // 
+            this.rtb_message_log.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtb_message_log.Location = new System.Drawing.Point(6, 6);
+            this.rtb_message_log.Name = "rtb_message_log";
+            this.rtb_message_log.ReadOnly = true;
+            this.rtb_message_log.Size = new System.Drawing.Size(436, 393);
+            this.rtb_message_log.TabIndex = 2;
+            this.rtb_message_log.Text = "";
+            // 
+            // nud_server_port
+            // 
+            this.nud_server_port.Location = new System.Drawing.Point(446, 32);
+            this.nud_server_port.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nud_server_port.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nud_server_port.Name = "nud_server_port";
+            this.nud_server_port.Size = new System.Drawing.Size(120, 20);
+            this.nud_server_port.TabIndex = 6;
+            this.nud_server_port.Value = new decimal(new int[] {
+            3679,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
@@ -228,9 +255,10 @@
             this.tabControl1.ResumeLayout(false);
             this.t_settings.ResumeLayout(false);
             this.t_settings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_port)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_user_port)).EndInit();
             this.t_messages.ResumeLayout(false);
             this.t_messages.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_server_port)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -244,7 +272,7 @@
         private System.Windows.Forms.RichTextBox rtb_message_log;
         private System.Windows.Forms.TextBox txt_username;
         private System.Windows.Forms.Label lb_username;
-        private System.Windows.Forms.NumericUpDown nud_port;
+        private System.Windows.Forms.NumericUpDown nud_user_port;
         private System.Windows.Forms.TextBox txt_ipaddress;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
@@ -252,6 +280,7 @@
         private System.Windows.Forms.TreeView TREE_channels;
         private System.Windows.Forms.Label LBL_channel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown nud_server_port;
     }
 }
 
