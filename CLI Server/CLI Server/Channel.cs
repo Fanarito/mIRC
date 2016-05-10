@@ -14,13 +14,27 @@ namespace CLI_Server
     {
         private static Random _random = new Random();
         // cancer
-        private static ConsoleColor[] legalColors = new ConsoleColor[12] { ConsoleColor.DarkGreen, ConsoleColor.DarkCyan, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.DarkYellow, ConsoleColor.Gray, ConsoleColor.DarkGray, ConsoleColor.Green, ConsoleColor.Cyan, ConsoleColor.Red, ConsoleColor.Magenta, ConsoleColor.Yellow };
+        private static ConsoleColor[] legalColors = new ConsoleColor[12] 
+        { 
+            ConsoleColor.DarkGreen,
+            ConsoleColor.DarkCyan,
+            ConsoleColor.DarkRed,
+            ConsoleColor.DarkMagenta,
+            ConsoleColor.DarkYellow,
+            ConsoleColor.Gray,
+            ConsoleColor.DarkGray,
+            ConsoleColor.Green,
+            ConsoleColor.Cyan,
+            ConsoleColor.Red,
+            ConsoleColor.Magenta,
+            ConsoleColor.Yellow 
+        };
         private List<User> users = new List<User>();
         public string name;
         private int user_count;
         public List<Channel> channels = new List<Channel>();
         public string id;
-        public Channel parent;
+        private Channel parent;
         private ConsoleColor color;
         private string motd;
 
@@ -55,11 +69,34 @@ namespace CLI_Server
             return legalColors[_random.Next(12)];
         }
 
+        private void UpdateClientTrees()
+        {
+            BroadcastToServer("PrepareForUpdatedTreeInformation");
+            foreach (var item in channels)
+            {
+                BroadcastToServer(item.id);
+            }
+            BroadcastToServer("Close");
+        }
+
         public void addChannel(string _name)
         {
             channels.Add(new Channel(_name, this));
+            UpdateClientTrees();
         }
 
+        public void removeChannel(string id)
+        {
+            foreach (var item in channels)
+            {
+                if (item.id == id)
+                {
+                    channels.Remove(item);
+                    break;
+                }
+            }
+            UpdateClientTrees();
+        }
         public void GetChannelList(BinaryWriter writer)
         {
             string channel_string = "";
@@ -72,7 +109,14 @@ namespace CLI_Server
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
-
+        public void GetChannelListRaw(BinaryWriter writer)
+        {
+            List<string> ChannelIDs = new List<string> { };
+            foreach (var item in channels)
+            {
+                writer.Write(item.id);
+            }
+        }
         public void UserLeave(User userino)
         {
             users.Remove(userino);
@@ -99,8 +143,15 @@ namespace CLI_Server
                 }
             }
         }
+        public void BroadcastToServer(string message)
+        {
+            foreach (var user in users)
+            {
+                user.SendMessage(message);
+            }
+        }
 
-        public void Broadcast(string message)
+        public void BroadcastToChannel(string message)
         {
             foreach (var user in users)
             {

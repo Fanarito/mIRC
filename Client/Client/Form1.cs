@@ -13,15 +13,17 @@ using System.IO;
 
 namespace Client
 {
+
     public partial class Form1 : Form
     {
         List<string> last_messages = new List<string>();
         int up_count = 0;
+        public bool Getmessages = false;
+        public List<string> ListIDsRaw = new List<string>();
 
         public Form1()
         {
             InitializeComponent();
-            InitializeTreeView();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -29,18 +31,30 @@ namespace Client
 
         }
 
-        //shit fyrir Treeview
-        private void InitializeTreeView()
+        public void InitializeTreeView()
         {
-            TREE_channels.BeginUpdate();
-            TREE_channels.Nodes.Add("@root");
-            TREE_channels.Nodes[0].Nodes.Add("Child 1");
-            TREE_channels.Nodes[0].Nodes.Add("Child 2");
-            TREE_channels.Nodes[0].Nodes[1].Nodes.Add("Grandchild");
-            TREE_channels.Nodes[0].Nodes[1].Nodes[0].Nodes.Add("Great Grandchild");
-            TREE_channels.EndUpdate();
+            foreach (var item in ListIDsRaw)
+            {
+                Log("ALLAH OGSNACKBAR " + item);
+            }
+
+            TreeGuiUpdate();
         }
 
+        public void TreeGuiUpdate()
+        {
+
+            TREE_channels.Invoke((MethodInvoker)delegate
+            {
+                TREE_channels.BeginUpdate();
+                TREE_channels.Nodes.Add("@root");
+                TREE_channels.Nodes[0].Nodes.Add("Child 1");
+                TREE_channels.Nodes[0].Nodes.Add("Child 2");
+                TREE_channels.Nodes[0].Nodes[1].Nodes.Add("Grandchild");
+                TREE_channels.Nodes[0].Nodes[1].Nodes[0].Nodes.Add("Great Grandchild");
+                TREE_channels.EndUpdate();
+            });
+        }
         public void Log(string message)
         {
             rtb_message_log.Invoke((MethodInvoker)delegate
@@ -51,17 +65,9 @@ namespace Client
             });
         }
 
-        public void ShowID(string id)
-        {
-            LBL_channel.Invoke((MethodInvoker)delegate
-            {
-                LBL_channel.Text = id;
-            });
-        }
-
         private void rtb_send_message_KeyUp(object sender, KeyEventArgs e)
         {
-            
+
         }
 
         private void rtb_send_message_KeyUp_1(object sender, KeyEventArgs e)
@@ -73,13 +79,14 @@ namespace Client
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Server.writer.Write("$disconnect");
-            Server.Disconnect();
-            Application.Exit();
+            //Server.Disconnect();
+            //Application.Exit();
+            Environment.Exit(0);
         }
 
         private void btn_connect_Click(object sender, EventArgs e)
         {
-            Server.Connect(txt_username.Text, txt_ipaddress.Text, (int)nud_user_port.Value, (int)nud_server_port.Value, this);
+            Server.Connect(txt_username.Text, txt_ipaddress.Text, (int)nud_port.Value, this);
             tabControl1.SelectedIndex = 1;
         }
 
@@ -96,136 +103,122 @@ namespace Client
             else if (e.KeyCode == Keys.Up)
             {
                 rtb_send_message.Text = last_messages[up_count];
-                if (last_messages.Count-1 > up_count)
+                if (last_messages.Count - 1 > up_count)
                     up_count++;
                 rtb_message_log.SelectionStart = rtb_message_log.TextLength;
                 rtb_message_log.ScrollToCaret();
             }
         }
+
+        public void ShowID(string id)
+        {
+            LBL_channel.Invoke((MethodInvoker)delegate
+            {
+                LBL_channel.Text = id;
+            });
+        }
     }
 
     static class Server
     {
-        public static Thread user_thread; // Thread for receiving data from server
-        public static Thread server_thread; // Thread for receiving data from server
-        public static TcpClient user_connection; // client to establish connection
-        public static TcpClient server_connection; // client to establish connection
-        public static NetworkStream user_stream; // network data stream
-        public static NetworkStream server_stream; // network data stream
-
-        public static BinaryWriter user_writer; // facilitates writing to the stream
-        public static BinaryReader user_reader; // facilitates reading from the stream
-        public static BinaryWriter server_writer;
-        public static BinaryReader server_reader;
-
+        public static Thread outputThread; // Thread for receiving data from server
+        public static TcpClient connection; // client to establish connection
+        public static NetworkStream stream; // network data stream
+        public static BinaryWriter writer; // facilitates writing to the stream
+        public static BinaryReader reader; // facilitates reading from the stream
         private static Form1 form;
 
-        public static void Connect(string username, string ip_address, int user_port, int server_port, Form1 _form)
+        public static void Connect(string username, string ip_address, int port, Form1 _form)
         {
             // make connection to server and get the associated
             // network stream                                  
-            user_connection = new TcpClient(ip_address, user_port);
-            server_connection = new TcpClient(ip_address, server_port);
-            user_stream = user_connection.GetStream();
-            server_stream = user_connection.GetStream();
-            user_writer = new BinaryWriter(user_stream);
-            user_reader = new BinaryReader(user_stream);
-            server_writer = new BinaryWriter(server_stream);
-            server_reader = new BinaryReader(server_stream);
+            connection = new TcpClient(ip_address, port);
+            stream = connection.GetStream();
+            writer = new BinaryWriter(stream);
+            reader = new BinaryReader(stream);
 
             form = _form;
 
+            form.InitializeTreeView();
+
             User.name = username;
-            server_writer.Write(username);
-            server_writer.Write("$get_channel_id");
-            User.channel_id = server_reader.ReadString();
+            writer.Write(username);
+            writer.Write("$get_channel_id");
+            User.channel_id = reader.ReadString();
             form.ShowID(User.channel_id);
 
             // start a new thread for sending and receiving messages
-            user_thread = new Thread(new ThreadStart(UserRun));
-            user_thread.Start();
-            server_thread = new Thread(new ThreadStart(ServerRun));
-            server_thread.Start();
+            outputThread = new Thread(new ThreadStart(Run));
+            outputThread.Start();
         }
 
         public static void Disconnect()
         {
-            //writer.Write("exiting");
-            /*connection.Close();
+            writer.Write("exiting");
+            connection.Close();
             stream.Close();
             writer.Close();
-            reader.Close();*/
+            reader.Close();
         }
 
         public static void SendMessage(string message)
         {
             if (message.Trim() == "")
             {
-                form.Log("get yo memes straight");
+                form.Log("eat a massive dick");
             }
-            /*else if (message[0] == '$')
-            {
-                string[] command = message.Split(' ');
-                switch (command[0])
-                {
-                    case "join":
-                        writer.Write(message);
-                        form.ShowID(reader.ReadString());
-                        break;
-                    case "create":
-                        writer.Write(message);
-                        form.ShowID(reader.ReadString());
-                        break;
-                    default:
-                        break;
-                }
-                writer.Write(message);
-            }*/
             else
             {
-                user_writer.Write(message);
+                writer.Write(message);
             }
         }
 
         public static void ProcessMessage(string message)
         {
-            if (message[0] == '$')
+
+            if (message == "PrepareForUpdatedTreeInformation")
             {
-                form.Log(message);
+                form.Getmessages = true;
+            }
+
+            if (!form.Getmessages)
+            {
+                if (message[0] == '$')
+                {
+                    form.Log(message);
+                }
+                else
+                {
+                    //Console.WriteLine(message);
+                    form.Log(message);
+                }
             }
             else
             {
-                //Console.WriteLine(message);
-                form.Log(message);
-            }
-        }
-
-        static void UserRun()
-        {
-            try
-            {
-                // Receive messages sent to client from server
+                form.ListIDsRaw.Clear();
                 while (true)
                 {
-                    ProcessMessage(user_reader.ReadString());
+                    string strengur = reader.ReadString();
+
+                    if (strengur == "Close")
+                        break;
+
+                    form.ListIDsRaw.Add(strengur);
                 }
+                form.Getmessages = false;
+                form.InitializeTreeView();
             }
-            catch (IOException ex)
-            {
-                form.Log("Server is down");
-                form.Log(ex.ToString());
-                Thread.Sleep(1000);
-            }
+
         }
 
-        static void ServerRun()
+        static void Run()
         {
             try
             {
                 // Receive messages sent to client from server
                 while (true)
                 {
-                    ProcessMessage(server_reader.ReadString());
+                    ProcessMessage(reader.ReadString());
                 }
             }
             catch (IOException ex)
