@@ -246,6 +246,9 @@ namespace Client
                     form.Log("meme recived");
                     form.queued_memes.Add(command[1]);
                     break;
+                case "$channel_id":
+                    form.ShowID(command[1]);
+                    break;
                 default:
                     break;
             }

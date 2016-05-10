@@ -40,7 +40,6 @@
             this.t_messages = new System.Windows.Forms.TabPage();
             this.pb_memes = new System.Windows.Forms.PictureBox();
             this.LBL_channel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.TREE_channels = new System.Windows.Forms.TreeView();
             this.rtb_send_message = new System.Windows.Forms.RichTextBox();
             this.rtb_message_log = new System.Windows.Forms.RichTextBox();
@@ -161,7 +160,6 @@
             // 
             this.t_messages.Controls.Add(this.pb_memes);
             this.t_messages.Controls.Add(this.LBL_channel);
-            this.t_messages.Controls.Add(this.label3);
             this.t_messages.Controls.Add(this.TREE_channels);
             this.t_messages.Controls.Add(this.rtb_send_message);
             this.t_messages.Controls.Add(this.rtb_message_log);
@@ -186,21 +184,11 @@
             // 
             this.LBL_channel.AutoSize = true;
             this.LBL_channel.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_channel.Location = new System.Drawing.Point(99, 490);
+            this.LBL_channel.Location = new System.Drawing.Point(9, 511);
             this.LBL_channel.Name = "LBL_channel";
             this.LBL_channel.Size = new System.Drawing.Size(128, 16);
             this.LBL_channel.TabIndex = 6;
             this.LBL_channel.Text = "@root#DANKMEMES";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(9, 491);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 14);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "You are in:";
             // 
             // TREE_channels
             // 
@@ -213,7 +201,7 @@
             // 
             this.rtb_send_message.Location = new System.Drawing.Point(6, 366);
             this.rtb_send_message.Name = "rtb_send_message";
-            this.rtb_send_message.Size = new System.Drawing.Size(436, 117);
+            this.rtb_send_message.Size = new System.Drawing.Size(436, 142);
             this.rtb_send_message.TabIndex = 3;
             this.rtb_send_message.Text = "";
             this.rtb_send_message.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rtb_send_message_KeyUp_1);
@@ -264,7 +252,6 @@
         private System.Windows.Forms.Button btn_connect;
         private System.Windows.Forms.TreeView TREE_channels;
         private System.Windows.Forms.Label LBL_channel;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pb_memes;
     }
 }

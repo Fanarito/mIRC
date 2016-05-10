@@ -22,6 +22,16 @@ namespace CLI_Server
         public Channel channel;
         public Channel root;
 
+        Dictionary<string, string> help = new Dictionary<string, string>()
+        {
+            {"get_channel_id", "Sends the user the id of his current channel \r\n<usage> $get_channel_id </usage>"},
+            {"get_channels", "Sends the user all ids of every channel on the server \r\n<usage> $get_channels </usage>"},
+            {"create", "Creates a new channel with a specified name in the current channel \r\n<usage> $create #name_of_channel </usage>"},
+            {"join", "Joins a specified channel by either name or id, if the channel exists \r\n<usage> $join #name_of_channel </usage>"},
+            {"send_meme", "This is the bread and butter of this application, sends a meme with a specified url \r\n<usage> $send_meme http://example.com/pic.jpg </usage>"},
+            {"help", "Displays all available commands, or if you include a command it displays info about it\r\n<usage> $help send_meme </usage>"}
+        };
+
         public User(Socket socket, Channel _channel, Channel _root)
         {
             connection = socket;
@@ -134,15 +144,36 @@ namespace CLI_Server
                     SetChannel(command[1]);
                     //channel.JoinChildChannel(command[1], this);
                     writer.Write("created and joined " + command[1]);
+                    writer.Write("$channel_id " + channel.id);
                     Console.WriteLine(channel.id);
                     break;
                 case "join":
                     SetChannel(command[1]);
                     writer.Write("joined " + command[1]);
+                    writer.Write("$channel_id " + channel.id);
                     break;
                 case "send_meme":
                     channel.BroadcastToChannel("$send_meme " + command[1]);
                     Console.WriteLine("sendi meme " + command[1]);
+                    break;
+                case "ping":
+                    writer.Write("Pong!");
+                    break;
+                case "wag":
+                    channel.BroadcastToChannel(name + " has SWAG!");
+                    break;
+                case "help":{
+                    if (command.ElementAtOrDefault(1) != null)
+                    {
+                        writer.Write(help[command[1]]);
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<string, string> item in help)
+                        {
+                            this.writer.Write(String.Format("{0}: {1}\r\n", item.Key, item.Value));
+                        }
+                    }}
                     break;
                 default:
                     writer.Write("Command not recognized");
