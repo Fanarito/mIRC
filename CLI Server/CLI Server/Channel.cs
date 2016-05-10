@@ -34,7 +34,7 @@ namespace CLI_Server
         private int user_count;
         public List<Channel> channels = new List<Channel>();
         public string id;
-        private Channel parent;
+        public Channel parent;
         private ConsoleColor color;
         private string motd;
 
@@ -102,11 +102,10 @@ namespace CLI_Server
             string channel_string = "";
             foreach (var channel in channels)
             {
-                Console.ForegroundColor = channel.color;
+                //Console.ForegroundColor = channel.color;
                 Console.WriteLine(channel.id);
                 writer.Write(channel.id);
                 channel.GetChannelList(writer);
-                Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
         public void GetChannelListRaw(BinaryWriter writer)

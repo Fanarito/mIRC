@@ -60,7 +60,17 @@ namespace CLI_Server
 
         public void SetChannel(string channel_name)
         {
-            if (!(channel_name[0] == '@'))
+            if (channel_name[0] == '@')
+            {
+                Channel buff = channel;
+
+                while (buff.parent != null)
+                {
+                    buff = buff.parent;
+                }
+                SetChannel(buff);
+            }
+            else
             {
                 foreach (var _channel in channel.channels)
                 {
@@ -129,6 +139,10 @@ namespace CLI_Server
                 case "join":
                     SetChannel(command[1]);
                     writer.Write("joined " + command[1]);
+                    break;
+                case "send_meme":
+                    channel.BroadcastToChannel("$send_meme " + command[1]);
+                    Console.WriteLine("sendi meme " + command[1]);
                     break;
                 default:
                     writer.Write("Command not recognized");

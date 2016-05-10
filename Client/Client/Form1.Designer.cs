@@ -38,6 +38,7 @@
             this.txt_username = new System.Windows.Forms.TextBox();
             this.lb_username = new System.Windows.Forms.Label();
             this.t_messages = new System.Windows.Forms.TabPage();
+            this.pb_memes = new System.Windows.Forms.PictureBox();
             this.LBL_channel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.TREE_channels = new System.Windows.Forms.TreeView();
@@ -47,6 +48,7 @@
             this.t_settings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_port)).BeginInit();
             this.t_messages.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_memes)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -72,7 +74,7 @@
             this.t_settings.Location = new System.Drawing.Point(4, 22);
             this.t_settings.Name = "t_settings";
             this.t_settings.Padding = new System.Windows.Forms.Padding(3);
-            this.t_settings.Size = new System.Drawing.Size(589, 515);
+            this.t_settings.Size = new System.Drawing.Size(640, 536);
             this.t_settings.TabIndex = 0;
             this.t_settings.Text = "Settings";
             this.t_settings.UseVisualStyleBackColor = true;
@@ -157,6 +159,7 @@
             // 
             // t_messages
             // 
+            this.t_messages.Controls.Add(this.pb_memes);
             this.t_messages.Controls.Add(this.LBL_channel);
             this.t_messages.Controls.Add(this.label3);
             this.t_messages.Controls.Add(this.TREE_channels);
@@ -167,8 +170,17 @@
             this.t_messages.Padding = new System.Windows.Forms.Padding(3);
             this.t_messages.Size = new System.Drawing.Size(640, 536);
             this.t_messages.TabIndex = 1;
-            this.t_messages.Text = "Messages";
+            this.t_messages.Text = "Memeges";
             this.t_messages.UseVisualStyleBackColor = true;
+            // 
+            // pb_memes
+            // 
+            this.pb_memes.Location = new System.Drawing.Point(448, 366);
+            this.pb_memes.Name = "pb_memes";
+            this.pb_memes.Size = new System.Drawing.Size(186, 161);
+            this.pb_memes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_memes.TabIndex = 7;
+            this.pb_memes.TabStop = false;
             // 
             // LBL_channel
             // 
@@ -222,7 +234,7 @@
             this.ClientSize = new System.Drawing.Size(651, 561);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "m(eme)IRC";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
@@ -231,6 +243,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_port)).EndInit();
             this.t_messages.ResumeLayout(false);
             this.t_messages.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_memes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -252,6 +265,7 @@
         private System.Windows.Forms.TreeView TREE_channels;
         private System.Windows.Forms.Label LBL_channel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pb_memes;
     }
 }
 

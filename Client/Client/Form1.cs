@@ -20,15 +20,17 @@ namespace Client
         int up_count = 0;
         public bool Getmessages = false;
         public List<string> ListIDsRaw = new List<string>();
+        public List<string> queued_memes = new List<string>();
 
         public Form1()
         {
             InitializeComponent();
+            Task.Factory.StartNew(Memes);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            SetMeme("http://s32.postimg.org/ol46s5s41/paypayx128.png");
         }
 
         public void InitializeTreeView()
@@ -117,6 +119,28 @@ namespace Client
                 LBL_channel.Text = id;
             });
         }
+
+        public void Memes()
+        {
+            while (true)
+            {
+                if (queued_memes.ElementAtOrDefault(0) != null)
+                {
+                    SetMeme(queued_memes[0]);
+                    queued_memes.RemoveAt(0);
+                }
+
+                Thread.Sleep(5000);
+            }
+        }
+
+        public void SetMeme(string url)
+        {
+            pb_memes.Invoke((MethodInvoker)delegate
+            {
+                pb_memes.ImageLocation = url;
+            });
+        }
     }
 
     static class Server
@@ -185,7 +209,7 @@ namespace Client
             {
                 if (message[0] == '$')
                 {
-                    form.Log(message);
+                    ProcessCommand(message.Split(' '));
                 }
                 else
                 {
@@ -209,6 +233,22 @@ namespace Client
                 form.InitializeTreeView();
             }
 
+        }
+
+        public static void ProcessCommand(string[] command)
+        {
+            switch (command[0])
+            {
+                case "$server_message":
+                    form.Log("Server: " + command[1]);
+                    break;
+                case "$send_meme":
+                    form.Log("meme recived");
+                    form.queued_memes.Add(command[1]);
+                    break;
+                default:
+                    break;
+            }
         }
 
         static void Run()
