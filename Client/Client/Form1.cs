@@ -62,7 +62,7 @@ namespace Client
             rtb_message_log.Invoke((MethodInvoker)delegate
             {
                 //rtb_message_log.AppendText(message + "\r\n");
-                rtb_message_log.Rtf = @"{\rtf1\ansi {\colortbl ;\red0\green128\blue0;\red0\green0\blue255;}" + rtb_message_log.Rtf + @"\line" + message + @"}";
+                rtb_message_log.Rtf = @"{\rtf1\ansi {\colortbl ;\red128\green0\blue0;\red0\green128\blue0;\red0\green0\blue255;}" + rtb_message_log.Rtf + @"\line" + message + @"}";
                 rtb_message_log.SelectionStart = rtb_message_log.TextLength;
                 rtb_message_log.ScrollToCaret();
             });
@@ -190,7 +190,7 @@ namespace Client
         {
             if (message.Trim() == "")
             {
-                form.Log("eat a massive dick");
+                form.Log(@"\fs40 Don't send empty messages");
             }
             else
             {

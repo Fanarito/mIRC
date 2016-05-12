@@ -13,23 +13,7 @@ namespace CLI_Server
     class Channel
     {
         private static Random _random = new Random();
-        // cancer
-        private static ConsoleColor[] legalColors = new ConsoleColor[12] 
-        { 
-            ConsoleColor.DarkGreen,
-            ConsoleColor.DarkCyan,
-            ConsoleColor.DarkRed,
-            ConsoleColor.DarkMagenta,
-            ConsoleColor.DarkYellow,
-            ConsoleColor.Gray,
-            ConsoleColor.DarkGray,
-            ConsoleColor.Green,
-            ConsoleColor.Cyan,
-            ConsoleColor.Red,
-            ConsoleColor.Magenta,
-            ConsoleColor.Yellow 
-        };
-        private List<User> users = new List<User>();
+        public List<User> users = new List<User>();
         public string name;
         private int user_count;
         public List<Channel> channels = new List<Channel>();
@@ -45,13 +29,13 @@ namespace CLI_Server
             parent = _parent;
             user_count = 0;
 
-            if (_color == ConsoleColor.Black && parent != null)
+            /*if (_color == ConsoleColor.Black && parent != null)
             {
                 do
                 {
                     color = GetRandomConsoleColor();
                 } while (parent.color == color);
-            }
+            }*/
 
             if (parent != null)
                 id = parent.id + name;
@@ -66,7 +50,7 @@ namespace CLI_Server
 
         private static ConsoleColor GetRandomConsoleColor()
         {
-            return legalColors[_random.Next(12)];
+            return ConsoleColor.Red;
         }
 
         private void UpdateClientTrees()
@@ -150,11 +134,24 @@ namespace CLI_Server
             }
         }
 
-        public void BroadcastToChannel(string message)
+        public void BroadcastToChannel(string message, string sender = "")
         {
             foreach (var user in users)
             {
-                user.SendMessage(message);
+                bool blocked = false;
+                if (sender != "")
+                {
+                    foreach (var blocked_user in user.blocked)
+                    {
+                        if (blocked_user.Name == sender)
+                        {
+                            blocked = true;
+                            break;
+                        }
+                    }
+                }
+                if (!blocked)
+                    user.SendMessage(message);
             }
         }
     }

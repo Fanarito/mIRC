@@ -28,3 +28,9 @@ H:\mIRC\CLI Server\CLI Server\obj\Debug\CLI Server.pdb
 H:\mIRC\CLI Server\CLI Server\bin\Debug\CLI Server.exe
 H:\mIRC\CLI Server\CLI Server\bin\Debug\CLI Server.pdb
 H:\mIRC\CLI Server\CLI Server\obj\Debug\CLI Server.csprojResolveAssemblyReference.cache
+X:\Viktor\Documents\mIRC\CLI Server\CLI Server\bin\Debug\CLI Server.exe.config
+X:\Viktor\Documents\mIRC\CLI Server\CLI Server\obj\Debug\CLI Server.exe
+X:\Viktor\Documents\mIRC\CLI Server\CLI Server\obj\Debug\CLI Server.pdb
+X:\Viktor\Documents\mIRC\CLI Server\CLI Server\bin\Debug\CLI Server.exe
+X:\Viktor\Documents\mIRC\CLI Server\CLI Server\bin\Debug\CLI Server.pdb
+X:\Viktor\Documents\mIRC\CLI Server\CLI Server\obj\Debug\CLI Server.csprojResolveAssemblyReference.cache

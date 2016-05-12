@@ -43,3 +43,12 @@ H:\mIRC\Client\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
 H:\mIRC\Client\Client\obj\Debug\Client.Form1.resources
 H:\mIRC\Client\Client\obj\Debug\Client.Properties.Resources.resources
 H:\mIRC\Client\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+X:\Viktor\Documents\mIRC\Client\Client\bin\Debug\Client.exe.config
+X:\Viktor\Documents\mIRC\Client\Client\obj\Debug\Client.exe
+X:\Viktor\Documents\mIRC\Client\Client\obj\Debug\Client.pdb
+X:\Viktor\Documents\mIRC\Client\Client\bin\Debug\Client.exe
+X:\Viktor\Documents\mIRC\Client\Client\bin\Debug\Client.pdb
+X:\Viktor\Documents\mIRC\Client\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+X:\Viktor\Documents\mIRC\Client\Client\obj\Debug\Client.Form1.resources
+X:\Viktor\Documents\mIRC\Client\Client\obj\Debug\Client.Properties.Resources.resources
+X:\Viktor\Documents\mIRC\Client\Client\obj\Debug\Client.csproj.GenerateResource.Cache
