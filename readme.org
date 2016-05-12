@@ -65,4 +65,5 @@ Einnig verður $help skipun, þar sem hægt er að bæta við nafni á skipun, �
 | $nosound        | Blocka öll hljóð skilaboð            |
 | $notext         | Blocka öll texta skilaboð            |
 | $noimg          | Blocka öll mynda skilaboð            |
+| $send_meme      | Sendir meme                          |
 
