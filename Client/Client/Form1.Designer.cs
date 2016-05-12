@@ -43,6 +43,8 @@
             this.TREE_channels = new System.Windows.Forms.TreeView();
             this.rtb_send_message = new System.Windows.Forms.RichTextBox();
             this.rtb_message_log = new System.Windows.Forms.RichTextBox();
+            this.LBL_front = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.t_settings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_port)).BeginInit();
@@ -63,6 +65,8 @@
             // 
             // t_settings
             // 
+            this.t_settings.Controls.Add(this.richTextBox1);
+            this.t_settings.Controls.Add(this.LBL_front);
             this.t_settings.Controls.Add(this.btn_connect);
             this.t_settings.Controls.Add(this.label2);
             this.t_settings.Controls.Add(this.label1);
@@ -215,6 +219,26 @@
             this.rtb_message_log.TabIndex = 2;
             this.rtb_message_log.Text = "";
             // 
+            // LBL_front
+            // 
+            this.LBL_front.AutoSize = true;
+            this.LBL_front.Font = new System.Drawing.Font("Myriad Hebrew", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_front.Location = new System.Drawing.Point(226, 107);
+            this.LBL_front.Name = "LBL_front";
+            this.LBL_front.Size = new System.Drawing.Size(168, 25);
+            this.LBL_front.TabIndex = 6;
+            this.LBL_front.Text = "Welcome to mIRC";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.richTextBox1.Location = new System.Drawing.Point(91, 224);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(456, 117);
+            this.richTextBox1.TabIndex = 7;
+            this.richTextBox1.Text = "This is a better form of IRC communication.\nIt has very deep \\cf1 meme \\cf0 incor" +
+    "poration and enhances the user experience greatly.";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -253,6 +277,8 @@
         private System.Windows.Forms.TreeView TREE_channels;
         private System.Windows.Forms.Label LBL_channel;
         private System.Windows.Forms.PictureBox pb_memes;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Label LBL_front;
     }
 }
 
