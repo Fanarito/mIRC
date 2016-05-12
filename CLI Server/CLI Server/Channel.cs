@@ -126,11 +126,31 @@ namespace CLI_Server
                 }
             }
         }
-        public void BroadcastToServer(string message)
+
+        public Channel FindRoot()
         {
-            foreach (var user in users)
+            Channel buff = this;
+
+            while (buff.parent != null)
             {
-                user.SendMessage(message);
+                buff = buff.parent;
+            }
+
+            return buff;
+        }
+
+        public void BroadcastToServer(string message, Channel buff = null)
+        {
+            if (buff == null)
+                buff = FindRoot();
+            Console.WriteLine(buff.name);
+            buff.BroadcastToChannel(message);
+
+            foreach (var channel in buff.channels)
+            {
+                Console.WriteLine(channel.name);
+                channel.BroadcastToChannel(message);
+                BroadcastToServer(message, channel);
             }
         }
 

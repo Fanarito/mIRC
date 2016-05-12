@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Threading;
 using System.IO;
+using System.Net;
 
 namespace Client
 {
@@ -156,7 +157,7 @@ namespace Client
         public static void Connect(string username, string ip_address, int port, Form1 _form)
         {
             // make connection to server and get the associated
-            // network stream                                  
+            // network stream     
             connection = new TcpClient(ip_address, port);
             stream = connection.GetStream();
             writer = new BinaryWriter(stream);

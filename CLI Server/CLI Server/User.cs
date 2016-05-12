@@ -238,6 +238,10 @@ namespace CLI_Server
                         }
                     }}
                     break;
+                case "broadcast":
+                    channel.BroadcastToServer(command[1]);
+                    Console.WriteLine("broadcasting " + command[1]);
+                    break;
                 default:
                     writer.Write("Command not recognized");
                     break;
