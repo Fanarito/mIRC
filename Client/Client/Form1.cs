@@ -43,8 +43,8 @@ namespace Client
                 {
                     //TREE.Find(item.Split('#')[0], false)[0].Parent.Nodes.Add(item.Split('#')[0]);
                     //TREE.Add(item.Split('#')[0]);
-                    //MessageBox.Show(item.Split('#')[0]);
-                    TreeSort(item.Substring(item.Split('#')[1].Length + 1), TREE.Find(item.Split('#')[0], false)[0].Nodes, deepness + 1);
+                    MessageBox.Show(item);
+                    TreeSort(item.Substring(item.Split('#')[1].Length), TREE.Find(item.Split('#')[0], false)[0].Nodes, deepness + 1);
                     //Log(@" deepness : " + Convert.ToString(deepness) + @", item : " + item);
                 }
                 else
