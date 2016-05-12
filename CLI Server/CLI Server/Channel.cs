@@ -154,6 +154,43 @@ namespace CLI_Server
             }
         }
 
+        public void BroadcastToServer(List<string> message, Channel buff = null)
+        {
+            if (buff == null)
+            {
+                buff = FindRoot();
+                buff.BroadcastToChannel(message);
+            }
+
+            foreach (var channel in buff.channels)
+            {
+                channel.BroadcastToChannel(message);
+                BroadcastToServer(message, channel);
+            }
+        }
+
+        public List<string> FindAllChannelsOnServer(List<string> id_list = null, Channel buff = null)
+        {
+            if (id_list == null)
+            {
+                id_list = new List<string>();
+            }
+            if (buff == null)
+            {
+                buff = FindRoot();
+                Console.WriteLine(buff.id);
+                id_list.Add(buff.id);
+            }
+
+            foreach (var channel in buff.channels)
+            {
+                Console.WriteLine(channel.id);
+                id_list.Add(channel.id);
+                id_list.Concat(FindAllChannelsOnServer(id_list, channel));
+            }
+            return id_list;
+        }
+
         public void BroadcastToChannel(string message, string sender = "")
         {
             foreach (var user in users)
@@ -172,6 +209,32 @@ namespace CLI_Server
                 }
                 if (!blocked)
                     user.SendMessage(message);
+            }
+        }
+
+        public void BroadcastToChannel(List<string> message, string sender = "")
+        {
+            foreach (var user in users)
+            {
+                bool blocked = false;
+                if (sender != "")
+                {
+                    foreach (var blocked_user in user.blocked)
+                    {
+                        if (blocked_user.Name == sender)
+                        {
+                            blocked = true;
+                            break;
+                        }
+                    }
+                }
+                if (!blocked)
+                {
+                    foreach (var mes in message)
+                    {
+                        user.SendMessage(mes);
+                    }
+                }
             }
         }
     }

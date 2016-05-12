@@ -190,6 +190,13 @@ namespace CLI_Server
                 case "get_channel_id":
                     writer.Write(channel.id);
                     break;
+                case "update_my_tree":
+
+                    writer.Write("PrepareForUpdatedTreeInformation");
+                    channel.BroadcastToChannel(channel.FindAllChannelsOnServer());
+                    writer.Write("Close");
+
+                    break;
                 case "get_channels":
                     // Writes out all child channels to client
                     channel.GetChannelList(writer);
@@ -241,6 +248,13 @@ namespace CLI_Server
                 case "broadcast":
                     channel.BroadcastToServer(command[1]);
                     Console.WriteLine("broadcasting " + command[1]);
+                    break;
+                case "findall":
+                    List<string> thing = channel.FindAllChannelsOnServer();
+                    foreach (var thang in thing)
+                    {
+                        Console.WriteLine(thang);
+                    }
                     break;
                 default:
                     writer.Write("Command not recognized");

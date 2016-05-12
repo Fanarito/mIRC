@@ -34,14 +34,65 @@ namespace Client
             SetMeme("http://s32.postimg.org/ol46s5s41/paypayx128.png");
         }
 
-        public void InitializeTreeView()
+        public void TreeSort(string item, TreeNodeCollection TREE, int deepness)
         {
-            foreach (var item in ListIDsRaw)
+
+            try
             {
-                Log("ALLAH OGSNACKBAR " + item);
+                if (item.Split('#')[0].Length > 0)
+                {
+                    //TREE.Find(item.Split('#')[0], false)[0].Parent.Nodes.Add(item.Split('#')[0]);
+                    //TREE.Add(item.Split('#')[0]);
+                    //MessageBox.Show(item.Split('#')[0]);
+                    TreeSort(item.Substring(item.Split('#')[1].Length + 1), TREE.Find(item.Split('#')[0], false)[0].Nodes, deepness + 1);
+                    //Log(@" deepness : " + Convert.ToString(deepness) + @", item : " + item);
+                }
+                else
+                {
+                    if (item.Length > 0)
+                        TREE.Add(item);
+                }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                //Log(@" ERROR, deepness : " + Convert.ToString(deepness) + @", item : " + item);
+                //MessageBox.Show(e);
+                TREE.Add(item.Split('#')[0], item.Split('#')[0]);
+                TreeNode throwaway = new TreeNode(item.Split('#')[0]);
+                TreeSort(item.Substring(item.Split('#')[0].Length), TREE[(TREE.Count - 1)].Nodes, deepness + 1);
+                //Log(@" deepness : " + Convert.ToString(deepness) + @", item : " + item);
             }
 
-            TreeGuiUpdate();
+        }
+
+        public void InitializeTreeView()
+        {
+            ListIDsRaw.Sort();
+
+
+
+            TREE_channels.Invoke((MethodInvoker)delegate
+            {
+                TREE_channels.BeginUpdate();
+                TREE_channels.Nodes.Clear();
+                Treesetup();
+                foreach (var item in ListIDsRaw)
+                {
+                    //Log(item);
+                    TreeSort(item, TREE_channels.Nodes[0].Nodes, 0);
+                }
+                TREE_channels.EndUpdate();
+            });
+        }
+
+        public void Treesetup()
+        {
+            TREE_channels.Invoke((MethodInvoker)delegate
+            {
+                TREE_channels.BeginUpdate();
+                TREE_channels.Nodes.Add("Root");
+                TREE_channels.EndUpdate();
+            });
         }
 
         public void TreeGuiUpdate()
@@ -173,6 +224,8 @@ namespace Client
             User.channel_id = reader.ReadString();
             form.ShowID(User.channel_id);
 
+            writer.Write("$update_my_tree");
+
             // start a new thread for sending and receiving messages
             outputThread = new Thread(new ThreadStart(Run));
             outputThread.Start();
@@ -195,7 +248,15 @@ namespace Client
             }
             else
             {
-                writer.Write(message);
+                if (message.Split(' ')[0] == "$create")
+                {
+                    writer.Write(message);
+                    writer.Write("$update_my_tree");
+                }
+                else
+                {
+                    writer.Write(message);
+                }
             }
         }
 
@@ -227,9 +288,14 @@ namespace Client
                     string strengur = reader.ReadString();
 
                     if (strengur == "Close")
+                    {
                         break;
-
-                    form.ListIDsRaw.Add(strengur);
+                    }
+                    else if (strengur == "") continue;
+                    else if (strengur == "@root") continue;
+                    //form.Log(strengur);
+                    form.ListIDsRaw.Add(strengur.Substring(6));
+                    //form.Log("channel sett í lista " + strengur.Substring(5));
                 }
                 form.Getmessages = false;
                 form.InitializeTreeView();
