@@ -244,7 +244,6 @@ namespace Client
                     form.Log("Server: " + command[1]);
                     break;
                 case "$send_meme":
-                    form.Log("meme recived");
                     form.queued_memes.Add(command[1]);
                     break;
                 case "$channel_id":

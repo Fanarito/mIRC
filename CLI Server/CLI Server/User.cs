@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Text.RegularExpressions;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -62,15 +62,40 @@ namespace CLI_Server
             channel.UserLeave(this);
             channel = _channel;
             channel.AddUser(this);
-            /*Channel change = null;
-            foreach (var chan in channel.channels)
+        }
+
+        public void SetChannel(List<string> channel_join)
+        {
+            if (channel_join.ElementAtOrDefault(0) == null)
             {
-                if (chan.name == channel_name)
+                return;
+            }
+            else if (channel_join[0] == "@root")
+            {
+                Channel buff = channel;
+
+                while (buff.parent != null)
                 {
-                    change = chan;
-                    channel = chan;
+                    buff = buff.parent;
                 }
-            }*/
+                SetChannel(buff);
+                channel_join.RemoveAt(0);
+                SetChannel(channel_join);
+                return;
+            }
+            else
+            {
+                foreach (var _channel in channel.channels)
+                {
+                    if (_channel.name == channel_join[0])
+                    {
+                        SetChannel(_channel);
+                        channel_join.RemoveAt(0);
+                        SetChannel(channel_join);
+                        return;
+                    }
+                }
+            }
         }
 
         public void SetChannel(string channel_name)
@@ -173,13 +198,18 @@ namespace CLI_Server
                     channel.addChannel(command[1]);
                     SetChannel(command[1]);
                     //channel.JoinChildChannel(command[1], this);
-                    writer.Write("created and joined " + command[1]);
+                    writer.Write(@"\cf3\b created and joined  \b0\cf2 " + command[1]);
                     writer.Write("$channel_id " + channel.id);
                     Console.WriteLine(channel.id);
                     break;
                 case "join":
-                    SetChannel(command[1]);
-                    writer.Write("joined " + command[1]);
+                    // Positive forward regex to split on #
+                    List<string> channel_join_list = Regex.Split(command[1], @"(?=[#])").ToList();
+                    // Remove empty if exists
+                    if (channel_join_list.ElementAtOrDefault(0) == "")
+                        channel_join_list.RemoveAt(0);
+                    SetChannel(channel_join_list);
+                    writer.Write(@"\cf3\b joined \b0\cf2 " + command[1]);
                     writer.Write("$channel_id " + channel.id);
                     break;
                 case "block":
