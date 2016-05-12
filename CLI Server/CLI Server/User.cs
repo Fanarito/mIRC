@@ -24,12 +24,13 @@ namespace CLI_Server
 
         Dictionary<string, string> help = new Dictionary<string, string>()
         {
-            {"get_channel_id", "Sends the user the id of his current channel \r\n<usage> $get_channel_id </usage>"},
-            {"get_channels", "Sends the user all ids of every channel on the server \r\n<usage> $get_channels </usage>"},
-            {"create", "Creates a new channel with a specified name in the current channel \r\n<usage> $create #name_of_channel </usage>"},
-            {"join", "Joins a specified channel by either name or id, if the channel exists \r\n<usage> $join #name_of_channel </usage>"},
-            {"send_meme", "This is the bread and butter of this application, sends a meme with a specified url \r\n<usage> $send_meme http://example.com/pic.jpg </usage>"},
-            {"help", "Displays all available commands, or if you include a command it displays info about it\r\n<usage> $help send_meme </usage>"}
+            {@"get_channel_id", @"Sends the user the id of his current channel \line \b $get_channel_id \b0 "},
+            {@"get_channels", @"Sends the user all ids of every channel on the server \line \b $get_channels \b0 "},
+            {@"create", @"Creates a new channel with a specified name in the current channel \line \b $create #name_of_channel \b0 "},
+            {@"join", @"Joins a specified channel by either name or id, if the channel exists \line \b $join #name_of_channel \b0 "},
+            {@"send_meme}", @"This is the bread and butter of this application, sends a meme with a specified url \line \b $send_meme http://example.com/pic.jpg \b0 "},
+            {@"help", @"Displays all available commands, or if you include a command it displays info about it \line \b $help send_meme\b0 "},
+            {@"block", @"Blocks a user by name \line \b $block user_name \b0 "}
         };
 
         public User(Socket socket, Channel _channel, Channel _root)
@@ -189,7 +190,7 @@ namespace CLI_Server
                 ProcessMessage(reader.ReadString());
 
                 Console.WriteLine(name + " connected");
-                writer.Write("$server_message connection confirmed");
+                writer.Write(@"\b Server\b0 : connection confirmed");
                 while (true)
                 {
                     try
