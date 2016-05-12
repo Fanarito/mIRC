@@ -1,0 +1,68 @@
+* TODO
+**** Lýsing MOFO
+**** Channel system
+**** Username þegar þú tengist við server 
+**** Tengjast með ip tölum eða url
+**** Enginn gagnagrunnur færð bara það sem er sent eftir að þú joinar
+**** Allt í function og klösum mjög commentað
+**** Joinar channel með $join #channelnafn
+**** Nested channels er must
+**** Creatar channel með $create #channelnafn
+**** Blocka user $block || $ignore username
+**** Autocomplete skipanir
+**** Greentext support
+
+* Commands
+**** Uppbygging er $command
+**** $join #channelname
+**** Getur chainað $join skipuninni svona $join #channelname#subchannel
+**** $create #channelname %notext%noimg
+**** $block|mute|ignore username
+**** $noaudio
+**** $noimg
+**** $notext
+**** $send ? ekki fullkomið 
+**** $help nafnskipunnar
+**** $wag skrifar að þessi user er með swag og minnnkar swag countið
+
+* Lýsing
+IRC client með leið til að senda myndir og hljóð.
+** IRC
+IRC er leið til að tala saman með texta yfir netið. Við ætlum gera svoleiðis hlut nema með aðeins fleiri
+eiginleikum. T.d. að senda myndir og hljóð.
+** Serverinn
+Getur verið með eins mikið af channels og hann vill.
+Þegar notandi tengist fer hann inní root channelið.
+Root channelið inniheldur öll önnur channel, það er ekki hægt að tala á því channeli,
+það er bara hægt að joina eða búa til önnur channel.
+Þegar búið er til channel er hægt að setja upp reglur, ekki er hægt breytt þeim nema að channelið sé búið aftur til.
+Notendur geta síðan talað saman með texta, myndum eða hljóði nema ef eitthvað af þessu er bannað.
+Það er hægt að blocka notendur með einfaldri skipun. Einnig er hægt að kick-a notendum ef nógu margir
+vilja það. Öll channel geta innihaldið önnur channel þannig að þú fáir flotta uppbyggingu af dóti. Þannig t.d.
+getur hópur af fólki sem heldur að jörðin sé flöt verið með channel sem heitir FlatEarth. Og inní því channeli
+eru kannski fleiri channel eins og Information og General þar sem fólk getur talað um sérstaka hluti eða fengið hjálp.
+
+** Client
+Client-in verður einfaldur og það eina sem notandin getur gert er að skrifa inní textabox.
+Svo þegar að hann ýtir á send þá sendir client-in textan á serverinn sem vinnur með hann og gerir það sem gera þarf.
+Það verður fullt af sérstökum skipunum sem client-inn getur gert, eins og t.d. að blocka notenda eða það að ignore-a
+öll hljóð skilaboð. Til þess að geta talað við aðra notendur þarf notandinn að join-a channel sem hann gerir með mjög
+einfaldri skipun sem lítur svona út $join #channelname þetta lætur serverinn joina channel með nafninu channelname.
+Ef notandinn vill búa til channel gerir hann $create #channelname þetta býr til channel með nafninu channelname.
+Það verður auto-complete á client-num svo að hann þurfi ekki að muna allar skipanir.
+Einnig verður $help skipun, þar sem hægt er að bæta við nafni á skipun, þá færðu allar upplýsingar um þá skipun.
+
+* Commands
+| Command         | Description                          |
+|-----------------+--------------------------------------|
+| $join #thing    | Joinar channel að nafni thing        |
+| $create #thing  | Býr til channel með nafnið thing     |
+| $help skipun    | Sýnir allar upplýsingarnar um skipun |
+| $help           | Sýnir allar skipanir                 |
+| $block notandi  | Blockar notandi                      |
+| $ignore notandi | Blockar notandi                      |
+| $mute notandi   | Blockar notandi                      |
+| $nosound        | Blocka öll hljóð skilaboð            |
+| $notext         | Blocka öll texta skilaboð            |
+| $noimg          | Blocka öll mynda skilaboð            |
+
