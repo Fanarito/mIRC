@@ -142,13 +142,13 @@ namespace CLI_Server
         public void BroadcastToServer(string message, Channel buff = null)
         {
             if (buff == null)
+            {
                 buff = FindRoot();
-            Console.WriteLine(buff.name);
-            buff.BroadcastToChannel(message);
+                buff.BroadcastToChannel(message);
+            }
 
             foreach (var channel in buff.channels)
             {
-                Console.WriteLine(channel.name);
                 channel.BroadcastToChannel(message);
                 BroadcastToServer(message, channel);
             }
