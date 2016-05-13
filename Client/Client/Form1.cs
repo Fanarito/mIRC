@@ -34,54 +34,57 @@ namespace Client
             SetMeme("http://s32.postimg.org/ol46s5s41/paypayx128.png");
         }
 
-        public void TreeSort(string item, TreeNodeCollection TREE, int deepness)
+        public void AddIDToTree(string id)
         {
+            List<string> names = id.Split('#').ToList();
+            names.RemoveAt(0);
 
-            try
+            TreeNodeCollection tree = TREE_channels.Nodes;
+            foreach (var name in names)
             {
-                if (item.Split('#')[0].Length > 0)
+                if (TreeContains(name, tree))
                 {
-                    //TREE.Find(item.Split('#')[0], false)[0].Parent.Nodes.Add(item.Split('#')[0]);
-                    //TREE.Add(item.Split('#')[0]);
-                    //MessageBox.Show(item);
-                    TreeSort(item.Substring(item.Split('#')[1].Length), TREE.Find(item.Split('#')[0], false)[0].Nodes, deepness + 1);
-                    //Log(@" deepness : " + Convert.ToString(deepness) + @", item : " + item);
+                    tree = tree[tree.IndexOfKey(name)].Nodes;
                 }
                 else
                 {
-                    if (item.Length > 0)
-                        TREE.Add(item);
+                    tree.Add(name, name);
+                    tree = tree[tree.IndexOfKey(name)].Nodes;
                 }
             }
-            catch (IndexOutOfRangeException e)
-            {
-                //Log(@" ERROR, deepness : " + Convert.ToString(deepness) + @", item : " + item);
-                //MessageBox.Show(e);
-                TREE.Add(item.Split('#')[0], item.Split('#')[0]);
-                TreeNode throwaway = new TreeNode(item.Split('#')[0]);
-                TreeSort(item.Substring(item.Split('#')[0].Length), TREE[(TREE.Count - 1)].Nodes, deepness + 1);
-                //Log(@" deepness : " + Convert.ToString(deepness) + @", item : " + item);
-            }
+        }
 
+        private bool TreeContains(string key, TreeNodeCollection tree)
+        {
+            try
+            {
+                if (tree.IndexOfKey(key) >= 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void InitializeTreeView()
         {
-            ListIDsRaw.Sort();
-
-
-
+            //ListIDsRaw.Sort();
             TREE_channels.Invoke((MethodInvoker)delegate
             {
                 TREE_channels.BeginUpdate();
                 TREE_channels.Nodes.Clear();
-                Treesetup();
+                //Treesetup();
                 foreach (var item in ListIDsRaw)
                 {
                     //Log(item);
-                    TreeSort(item, TREE_channels.Nodes[0].Nodes, 0);
+                    AddIDToTree(item);
                 }
                 TREE_channels.EndUpdate();
+                TREE_channels.ExpandAll();
             });
         }
 
@@ -90,7 +93,7 @@ namespace Client
             TREE_channels.Invoke((MethodInvoker)delegate
             {
                 TREE_channels.BeginUpdate();
-                TREE_channels.Nodes.Add("Root");
+                TREE_channels.Nodes.Add("root");
                 TREE_channels.EndUpdate();
             });
         }
@@ -160,6 +163,14 @@ namespace Client
                 rtb_send_message.Text = last_messages[up_count];
                 if (last_messages.Count - 1 > up_count)
                     up_count++;
+                rtb_message_log.SelectionStart = rtb_message_log.TextLength;
+                rtb_message_log.ScrollToCaret();
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                rtb_send_message.Text = last_messages[up_count];
+                if (last_messages.Count - 1 < up_count)
+                    up_count--;
                 rtb_message_log.SelectionStart = rtb_message_log.TextLength;
                 rtb_message_log.ScrollToCaret();
             }
@@ -292,9 +303,9 @@ namespace Client
                         break;
                     }
                     else if (strengur == "") continue;
-                    else if (strengur == "@root") continue;
+                    //else if (strengur == "@root") continue;
                     //form.Log(strengur);
-                    form.ListIDsRaw.Add(strengur.Substring(6));
+                    form.ListIDsRaw.Add("#" + strengur.Substring(1));
                     //form.Log("channel sett í lista " + strengur.Substring(5));
                 }
                 form.Getmessages = false;
