@@ -32,6 +32,17 @@ namespace Client
         private void Form1_Load(object sender, EventArgs e)
         {
             SetMeme("http://s32.postimg.org/ol46s5s41/paypayx128.png");
+            richTextBox1.Rtf = @"{\rtf1\ansi {\colortbl ;\red128\green0\blue0;\red0\green128\blue0;\red0\green0\blue255;}
+\fs20 This is a better form of IRC communication.\line 
+It has very deep \cf1 meme \cf0 incorporation and enhances the user experience greatly. \line \line 
+
+\fs30 How to use: \fs20\line 
+Choose a username and press connect.\line 
+When you have finished the connection process, just start typing.\line 
+To send a message press enter.\line 
+To see all commands type \cf1 $help \cf0 and press enter.\line \line 
+
+Thats it, enjoy.}";
         }
 
         public void AddIDToTree(string id)

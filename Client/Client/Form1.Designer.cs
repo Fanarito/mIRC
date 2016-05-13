@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.t_settings = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.LBL_front = new System.Windows.Forms.Label();
             this.btn_connect = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,8 +46,6 @@
             this.TREE_channels = new System.Windows.Forms.TreeView();
             this.rtb_send_message = new System.Windows.Forms.RichTextBox();
             this.rtb_message_log = new System.Windows.Forms.RichTextBox();
-            this.LBL_front = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.t_settings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_port)).BeginInit();
@@ -81,6 +82,28 @@
             this.t_settings.TabIndex = 0;
             this.t_settings.Text = "Settings";
             this.t_settings.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.richTextBox1.Location = new System.Drawing.Point(120, 147);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(463, 253);
+            this.richTextBox1.TabIndex = 7;
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
+            // LBL_front
+            // 
+            this.LBL_front.AutoSize = true;
+            this.LBL_front.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_front.Location = new System.Drawing.Point(226, 107);
+            this.LBL_front.Name = "LBL_front";
+            this.LBL_front.Size = new System.Drawing.Size(183, 25);
+            this.LBL_front.TabIndex = 6;
+            this.LBL_front.Text = "Welcome to mIRC";
             // 
             // btn_connect
             // 
@@ -218,26 +241,6 @@
             this.rtb_message_log.Size = new System.Drawing.Size(436, 354);
             this.rtb_message_log.TabIndex = 2;
             this.rtb_message_log.Text = "";
-            // 
-            // LBL_front
-            // 
-            this.LBL_front.AutoSize = true;
-            this.LBL_front.Font = new System.Drawing.Font("Myriad Hebrew", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_front.Location = new System.Drawing.Point(226, 107);
-            this.LBL_front.Name = "LBL_front";
-            this.LBL_front.Size = new System.Drawing.Size(168, 25);
-            this.LBL_front.TabIndex = 6;
-            this.LBL_front.Text = "Welcome to mIRC";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.richTextBox1.Location = new System.Drawing.Point(91, 224);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(456, 117);
-            this.richTextBox1.TabIndex = 7;
-            this.richTextBox1.Text = "This is a better form of IRC communication.\nIt has very deep \\cf1 meme \\cf0 incor" +
-    "poration and enhances the user experience greatly.";
             // 
             // Form1
             // 

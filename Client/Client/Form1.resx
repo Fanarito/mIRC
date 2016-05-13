@@ -117,4 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>This is a better form of IRC communication.
+It has very deep \cf1 meme \cf0 incorporation and enhances the user experience greatly.
+
+\fs30 How to use: \fs0
+Choose a username and press connect.
+When you have finished the connection process, just start typing.
+To send a message press enter.
+To see all commands type \cf1 $help \cf0 and press enter.
+
+Thats it, enjoy.</value>
+  </data>
 </root>
