@@ -156,6 +156,7 @@
             0,
             0,
             0});
+            this.nud_port.KeyUp += new System.Windows.Forms.KeyEventHandler(this.nud_port_KeyUp);
             // 
             // txt_ipaddress
             // 
@@ -164,6 +165,7 @@
             this.txt_ipaddress.Size = new System.Drawing.Size(194, 20);
             this.txt_ipaddress.TabIndex = 1;
             this.txt_ipaddress.Text = "127.0.0.1";
+            this.txt_ipaddress.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_ipaddress_KeyUp);
             // 
             // txt_username
             // 
@@ -172,6 +174,7 @@
             this.txt_username.Size = new System.Drawing.Size(100, 20);
             this.txt_username.TabIndex = 0;
             this.txt_username.Text = "jolli";
+            this.txt_username.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_username_KeyUp);
             // 
             // lb_username
             // 

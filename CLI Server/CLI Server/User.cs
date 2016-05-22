@@ -202,6 +202,8 @@ namespace CLI_Server
                     channel.GetChannelList(writer);
                     break;
                 case "create":
+                    if (command[1][0] != '#')
+                        command[1] = "#" + command[1];
                     channel.addChannel(command[1]);
                     SetChannel(command[1]);
                     //channel.JoinChildChannel(command[1], this);
@@ -230,7 +232,7 @@ namespace CLI_Server
                     writer.Write("Pong!");
                     break;
                 case "wag":
-                    channel.BroadcastToChannel(name + " has SWAG!");
+                    channel.BroadcastToChannel(@"\cf1\fs40 " + name + " has SWAG!");
                     break;
                 case "help":{
                     if (command.ElementAtOrDefault(1) != null)
@@ -257,7 +259,7 @@ namespace CLI_Server
                     }
                     break;
                 default:
-                    writer.Write("Command not recognized");
+                    writer.Write(@"\cf3\fs20 Command not recognized");
                     break;
             }
         }

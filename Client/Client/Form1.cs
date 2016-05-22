@@ -139,12 +139,6 @@ Thats it, enjoy.}";
 
         }
 
-        private void rtb_send_message_KeyUp_1(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                rtb_send_message.Text = rtb_send_message.Text.Trim();
-        }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Server.writer.Write("$disconnect");
@@ -161,30 +155,7 @@ Thats it, enjoy.}";
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                rtb_send_message.Text = rtb_send_message.Text.TrimEnd();
-                Server.SendMessage(rtb_send_message.Text);
-                last_messages.Insert(0, rtb_send_message.Text.TrimEnd());
-                rtb_send_message.Clear();
-                up_count = 0;
-            }
-            else if (e.KeyCode == Keys.Up)
-            {
-                rtb_send_message.Text = last_messages[up_count];
-                if (last_messages.Count - 1 > up_count)
-                    up_count++;
-                rtb_message_log.SelectionStart = rtb_message_log.TextLength;
-                rtb_message_log.ScrollToCaret();
-            }
-            else if (e.KeyCode == Keys.Down)
-            {
-                rtb_send_message.Text = last_messages[up_count];
-                if (last_messages.Count - 1 < up_count)
-                    up_count--;
-                rtb_message_log.SelectionStart = rtb_message_log.TextLength;
-                rtb_message_log.ScrollToCaret();
-            }
+            
         }
 
         public void ShowID(string id)
@@ -215,6 +186,65 @@ Thats it, enjoy.}";
             {
                 pb_memes.ImageLocation = url;
             });
+        }
+
+        private void rtb_send_message_KeyUp_1(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                rtb_send_message.Text = rtb_send_message.Text.TrimEnd();
+                Server.SendMessage(rtb_send_message.Text);
+                last_messages.Insert(0, rtb_send_message.Text.TrimEnd());
+                rtb_send_message.Clear();
+                up_count = 0;
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                rtb_send_message.Text = last_messages[up_count];
+                if (last_messages.Count - 1 > up_count)
+                    up_count++;
+                rtb_message_log.SelectionStart = rtb_message_log.TextLength;
+                rtb_message_log.ScrollToCaret();
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                rtb_send_message.Text = last_messages[up_count];
+                if (last_messages.Count - 1 < up_count)
+                    up_count--;
+                rtb_message_log.SelectionStart = rtb_message_log.TextLength;
+                rtb_message_log.ScrollToCaret();
+            }
+        }
+
+        private void txt_username_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                connect();
+            }
+        }
+
+        private void txt_ipaddress_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                connect();
+            }
+        }
+
+        private void nud_port_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                connect();
+            }
+        }
+
+        private void connect()
+        {
+            Server.Connect(txt_username.Text, txt_ipaddress.Text, (int)nud_port.Value, this);
+            tabControl1.SelectedIndex = 1;
+            ActiveControl = rtb_send_message;
         }
     }
 
